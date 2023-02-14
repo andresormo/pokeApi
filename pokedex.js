@@ -5,10 +5,7 @@ const input$$ = document.querySelector('#input')
 
 lista$$.className = 'b-list'
 
-
-const mapPokemons = (pokemonObj) => {
-    const pokeArray = []
-    pokeArray.push(pokemonObj)
+const mapPokemons = (pokeArray) => {
     return pokeArray.map((pokemon) => ({
         name: pokemon.name,
         image: pokemon.sprites['front_default'],
@@ -18,9 +15,10 @@ const mapPokemons = (pokemonObj) => {
 }
 
 function dibujarPokemon(pokemons) {
-    
-    // lista$$.innerHTML = ''
+   
+    lista$$.innerHTML = ''
     for (const pokemon of pokemons) {
+
         const div$$ = document.createElement('div')
         const pokeTitle$$ = document.createElement('h4')
         pokeTitle$$.innerHTML = pokemon.name
@@ -42,6 +40,7 @@ function dibujarPokemon(pokemons) {
         div$$.appendChild(figure$$)
         lista$$.appendChild(div$$)
     }
+
 }
 
 function pintarBusqueda(pokemons) {
@@ -56,29 +55,15 @@ function busquedaPokemons(filtro, pokemons) {
 }
 
 
+const pokeArray=[]
 for (let i = 1; i <= 150; i++) {
     const pokemonObj = await getPokemonFromApi(i)
-    const pokeMapped = mapPokemons(pokemonObj)
+    pokeArray.push(pokemonObj)
+}
+
+function init(){
+    const pokeMapped = mapPokemons(pokeArray)
     dibujarPokemon(pokeMapped)
     pintarBusqueda(pokeMapped)
 }
-        // const figure$$ = document.createElement('figure')
-        // lista$$.appendChild(figure$$)
-        // const pokeTitle$$ = document.createElement('h4')
-        // const img$$ = document.createElement('img')
-        // const figcaption$$ = document.createElement('figcaption')
-
-        // pokeTitle$$.innerHTML = pokemon.name
-        // img$$.setAttribute('src', `${pokemon.image}`)
-        // figcaption$$.innerHTML = pokemon.type
-
-
-        // pokeTitle$$.className = 'title b-card_text'
-        // figure$$.className = 'b-figure'
-        // img$$.className = 'b-img'
-        // figcaption$$.className = 'title b-subtitle'
-
-
-        // figure$$.appendChild(pokeTitle$$)
-        // figure$$.appendChild(img$$)
-        // figure$$.appendChild(figcaption$$)
+init()
