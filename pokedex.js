@@ -1,5 +1,6 @@
 import { getPokemonFromApi } from "./pokeapi.js"
 
+const pokeArray = []
 const lista$$ = document.querySelector('#pokedex')
 const input$$ = document.querySelector('#input')
 
@@ -15,7 +16,7 @@ const mapPokemons = (pokeArray) => {
 }
 
 function dibujarPokemon(pokemons) {
-   
+
     lista$$.innerHTML = ''
     for (const pokemon of pokemons) {
 
@@ -50,20 +51,20 @@ function pintarBusqueda(pokemons) {
 }
 
 function busquedaPokemons(filtro, pokemons) {
-    let filteredPokemon = pokemons.filter((pokemon) =>pokemon.name.toLowerCase().includes(filtro.toLowerCase()))
+    let filteredPokemon = pokemons.filter((pokemon) => pokemon.name.toLowerCase().includes(filtro.toLowerCase()))
     dibujarPokemon(filteredPokemon)
 }
 
+window.addEventListener('DOMContentLoaded', async () => {
+    for (let i = 1; i <= 150; i++) {
+        const pokemonObj = await getPokemonFromApi(i)
+        pokeArray.push(pokemonObj)
+    }
+    init()
+})
 
-const pokeArray=[]
-for (let i = 1; i <= 150; i++) {
-    const pokemonObj = await getPokemonFromApi(i)
-    pokeArray.push(pokemonObj)
-}
-
-function init(){
+function init() {
     const pokeMapped = mapPokemons(pokeArray)
     dibujarPokemon(pokeMapped)
     pintarBusqueda(pokeMapped)
 }
-init()
